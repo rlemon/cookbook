@@ -1,0 +1,23 @@
+body {
+    background: #444;
+}
+.ghicon {
+    display: inline-block;
+    width: 14px;
+    height: 17px;
+    line-height: 16px;
+    vertical-align: text-top;
+    background-repeat: no-repeat;
+    background-image: url(https://a248.e.akamai.net/assets.github.com/images/modules/buttons/mini_button_icons.png);
+}
+.ghicon-fork {
+    margin-top: -3px;
+    background-position: -80px 0;
+}
+.action-line {
+    margin-bottom: -0.5em;   
+}
+footer p {
+	color: #aaa;
+	font-size: 14px;
+}
