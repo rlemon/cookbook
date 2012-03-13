@@ -191,7 +191,7 @@
  *  <pre>$handle->image_background_color = '#FF00FF';</pre></li>
  *  <li><b>{@link image_default_color}</b> fallback color background color for non alpha-transparent output formats, such as JPEG or BMP, in hexadecimal (default: #FFFFFF)<br>
  *  <pre>$handle->image_default_color = '#FF00FF';</pre></li>
- *  <li><b>{@link jpeg_quality}</b> sets the compression quality for JPEG images (default: 85)<br>
+ *  <li><b>{@link jpeg_quality}</b> sets the compression quality for JPEG images (default: 100)<br>
  *  <pre>$handle->jpeg_quality = 50;</pre></li>
  *  <li><b>{@link jpeg_size}</b> if set to a size in bytes, will approximate {@link jpeg_quality} so the output image fits within the size (default: null)<br>
  *  <pre>$handle->jpeg_size = 3072;</pre></li>
@@ -1404,7 +1404,7 @@ class upload {
      *
      * To use with {@link image_overlay_opacity}
      *
-     * Default value is null
+     * Default value is nullimage/jpeg
      *
      * @access public
      * @var string;
@@ -2223,7 +2223,7 @@ class upload {
         $this->image_ratio_no_zoom_out  = false;
         $this->image_ratio_x            = false;    // calculate the $image_x if true
         $this->image_ratio_y            = false;    // calculate the $image_y if true
-        $this->jpeg_quality             = 85;
+        $this->jpeg_quality             = 100;
         $this->jpeg_size                = null;
         $this->preserve_transparency    = false;
         $this->image_is_transparent     = false;

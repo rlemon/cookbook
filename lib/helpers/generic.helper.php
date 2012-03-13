@@ -61,7 +61,7 @@ function is_ajax() {
 	
 }
 
-function cleanInput($data) {
+function cleaninput($data) {
 	// http://svn.bitflux.ch/repos/public/popoon/trunk/classes/externalinput.php
 	// +----------------------------------------------------------------------+
 	// | Copyright (c) 2001-2006 Bitflux GmbH                                 |

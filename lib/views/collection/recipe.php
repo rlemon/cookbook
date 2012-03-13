@@ -70,9 +70,9 @@
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="directions">Cooking Directions</label>
+				<label class="control-label" for="cook-directions">Cooking Directions</label>
 				<div class="controls">
-					<textarea class="input-xlarge" id="directions" name="directions" rows="8"></textarea>
+					<textarea class="input-xlarge" id="cook-directions" name="cook-directions" rows="8"></textarea>
 				</div>
 			</div>
 			<div class="control-group">
