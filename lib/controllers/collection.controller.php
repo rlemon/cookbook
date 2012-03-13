@@ -35,4 +35,11 @@ class Collection extends Controller {
 		$this->view->load('collection/index');
 	}
 	
+	public function my_recipes() {
+		$this->view->load('collection/index');
+	}
+	
+	public function new_recipe() {
+		$this->view->load('collection/recipe');
+	}
 }
