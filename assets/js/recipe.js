@@ -47,7 +47,15 @@ function btn_add_handler(e) {
 		'g': 'gram',
 		'kg': 'kg'
 	};
-		
+	unit.appendChild(create.elm('option'));
+	for( var unit_type in unit_values ) {
+		var option = create.elm('option', {
+			'value': unit_type
+		});
+		option.appendChild(create.text(unit_values[unit_type]));
+		unit.appendChild(option);
+	}
+	
 	lbl.appendChild(create.elm('i',{'class':'icon-shopping-cart'}));
 	ctrls.appendChild(amount);
 	

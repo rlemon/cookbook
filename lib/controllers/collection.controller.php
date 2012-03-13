@@ -41,6 +41,9 @@ class Collection extends Controller {
 	
 	public function new_recipe() {
 		$data = array();
+		if( isset( $_POST['save'] ) ) {
+			$data['errors'] = $_POST;
+		}
 		$data['scripts'] = array( '/assets/js/recipe.js' );
 		$this->view->load('collection/recipe', $data);
 	}

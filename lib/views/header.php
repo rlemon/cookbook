@@ -25,14 +25,20 @@ function set_if_active($page, $controller) {
 	
 </head>
 <body>
-		<!-- DEBUG -->
-		<?php if( isset($this->errors) ): ?>
-		<pre>
-			<?php print_r($this->errors); ?>
-		</pre>
-		<?php endif; ?>
-		<!-- REMOVE AFTER NOTIFICATIONS -->
-		
+
+
+<?php if( isset($this->errors) ): ?>
+<!-- DEBUG -->
+<div class="hero-unit">
+	<h1>Errors <small>Debugging</small></h1>
+<pre>
+<?php print_r($this->errors); ?>
+</pre>
+</div>
+<!-- REMOVE AFTER NOTIFICATIONS -->
+<?php endif; ?>
+
+
     <div class="navbar">
         <div class="navbar-inner">
             <div class="container">

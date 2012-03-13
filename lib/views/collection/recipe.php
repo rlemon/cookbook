@@ -83,7 +83,7 @@
 			</div>
 			
 			<div class="form-actions">
-				<button type="submit" class="btn btn-primary">Save changes</button>
+				<button type="submit" class="btn btn-primary" name="save">Save Recipe</button>
 				<button class="btn">Cancel</button>
 			</div>
 		</fieldset>
