@@ -40,6 +40,8 @@ class Collection extends Controller {
 	}
 	
 	public function new_recipe() {
-		$this->view->load('collection/recipe');
+		$data = array();
+		$data['scripts'] = array( '/assets/js/recipe.js' );
+		$this->view->load('collection/recipe', $data);
 	}
 }

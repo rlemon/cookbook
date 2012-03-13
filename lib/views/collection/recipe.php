@@ -7,7 +7,7 @@
 				<label class="control-label" for="name">Name</label>
 				<div class="controls">
 					<input type="text" class="input-xlarge" id="name" name="name">
-					<p class="help-block">Avoid common names like 'Apple Pie', 'MeatLoaf', ect.</p>
+					<p class="help-block">Avoid common names like 'Apple Pie', 'MeatLoaf', etc.</p>
 				</div>
 			</div>
 			<div class="control-group">
@@ -43,29 +43,10 @@
 			<legend>Ingredients</legend>
 			<div class="control-group">
 				<div class="controls">
-					<a href="#" class="btn btn-small"><i class="icon-plus"></i> Add Ingredient</a> 
+					<a id="add-ingredient" class="btn btn-small"><i class="icon-plus"></i> Add Ingredient</a> 
 				</div>
 			</div>
-			<div class="control-group">
-				<label class="control-label">1.</label>
-				<div class="controls">
-					<input type="text" class="span1" name="ingredient-amount-1">
-					<select class="span1" name="ingredient-unit-1">
-						<option></option>
-						<option value="tsp">tsp</option>
-						<option value="tbsp">tbsp</option>
-						<option value="cup">cup</option>
-						<option value="ml">ml</option>
-						<option value="l">litre</option>
-						<option value="g">gram</option>
-						<option value="kg">kg</option>
-					</select>
-					<input class="span3" type="text" name="ingredient-1">
-						<a href="#" class="btn btn-mini btn-inverse"><i class="icon-remove icon-white"></i> remove</a>
-					<p class="help-inline">
-					</p>
-				</div>
-			</div>
+			<div id="ingredient-container"></div>
 			
 			<legend>Directions</legend>
 			<div class="control-group">

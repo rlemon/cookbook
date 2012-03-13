@@ -25,3 +25,8 @@ span.help-inline {
 	color: #999;
 	margin-right: 1.3em;
 }
+
+#ingredient-container .controls input, #ingredient-container .controls select {
+	margin-right: 0.3em;
+}
+
