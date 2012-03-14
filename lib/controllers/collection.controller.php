@@ -32,7 +32,10 @@ class Collection extends Controller {
 	}
 	
 	public function index() {
-		$this->view->load('collection/index');
+		$data = array();
+		$data['errors'] = array();
+		$data['errors'][] = $this->model->insert_tags('1', array('fap','newfapper','fapper','fappest'));
+		$this->view->load('collection/index', $data);
 	}
 	
 	public function my_recipes() {
@@ -44,18 +47,34 @@ class Collection extends Controller {
 		include( 'lib/libraries/upload.class.php' );
 		if( isset( $_POST['save'] ) ) {
 			$data['errors'] = array();
-			// validate form
+			
 			$author_id = Session::get('id');
 			$owner_id = $author_id;
+			
+			// validate form
 			$name = cleaninput($_POST['name']);
 			if( empty( $name ) ) {
 				$data['errors'][] = array( 'title' => 'Invalid Input', 'text' => '`Name` cannot be blank' );
 			}
+			
 			$description = cleaninput($_POST['description']);
 			if( empty( $description ) ) {
 				$data['errors'][] = array( 'title' => 'Invalid Input', 'text' => '`Description` cannot be blank' );
 			}
+			
 			$is_private = isset( $_POST['is_private'] ) && $_POST['is_private'] == '1' ? 1 : 0;
+
+
+			$prep_directions = cleaninput($_POST['prep-directions']);
+			$cook_directions = cleaninput($_POST['cook-directions']);
+			$post_directions = cleaninput($_POST['post-directions']);
+			
+			// sanitized not checked.
+			$prep_time_hours = isset($_POST['prep-hours']) && is_numeric($_POST['prep-hours']) ? $_POST['prep-hours'] : 0;
+			$prep_time_minutes = isset($_POST['prep-minutes']) && is_numeric($_POST['prep-minutes']) ? $_POST['prep-minutes'] : 0;
+			$cook_time_hours = isset($_POST['cook-hours']) && is_numeric($_POST['cook-hours']) ? $_POST['cook-hours'] : 0;
+			$cook_time_minutes = isset($_POST['cook-minutes']) && is_numeric($_POST['cook-minutes']) ? $_POST['cook-minutes'] : 0;
+
 
 			$picture = '';
 			if( isset( $_FILES['picture'] ) ) {
@@ -77,18 +96,39 @@ class Collection extends Controller {
 				}
 			}
 			
-			$prep_directions = cleaninput($_POST['prep-directions']);
-			$cook_directions = cleaninput($_POST['cook-directions']);
-			$post_directions = cleaninput($_POST['post-directions']);
+			// nice
+			list($ingredients, $amounts, $units) = array($_POST['ingredient'], $_POST['ingredient-amount'], $_POST['ingredient-unit']);
+			$ingredientsArray = array();
+			foreach( $ingredients as $k => $ingredient) {
+				$ingredientsArray[] = array('ingredient' => $ingredient, 'amount' => $amounts[$k], 'unit' => $units[$k] );
+			}
 			
-			$prep_time_hours = isset($_POST'prep-hours']) && is_numeric($_POST['prep-hours']) ? $_POST['prep-hours'] : 0;
-			$prep_time_minutes = isset($_POST'prep-minutes']) && is_numeric($_POST['prep-minutes']) ? $_POST['prep-minutes'] : 0;
-			$cook_time_hours = isset($_POST'cook-hours']) && is_numeric($_POST['cook-hours']) ? $_POST['cook-hours'] : 0;
-			$cook_time_minutes = isset($_POST'cook-minutes']) && is_numeric($_POST['cook-minutes']) ? $_POST['cook-minutes'] : 0;
+			$tagsArray = explode(' ', cleaninput($_POST['tags']));
 			
+			if( !$this->model->insert_recipe(
+											$owner_id,
+											$author_id,
+											$name,
+											$description,
+											$is_private,
+											$picture,
+											$prep_directions,
+											$cook_directions,
+											$post_directions,
+											$prep_time_hours,
+											$prep_time_minutes,
+											$cook_time_hours,
+											$cook_time_minutes,
+											$ingredientsArray,
+											$tagsArray
+										)) {
+				$data['errors'][] = array( 'title' => 'Insert Error', 'text' => 'Unable to insert records to database.' );
+			}
 			
-			// ingredients
-			// tags
+			if( empty($data['errors']) ) {
+				redirect('collection');
+			}
+			
 		}
 		$data['scripts'] = array( '/assets/js/recipe.js' );
 		$this->view->load('collection/recipe', $data);
