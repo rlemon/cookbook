@@ -1,4 +1,3 @@
-
 --
 -- Database: `cookbook`
 --
@@ -16,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `ingredients_list` (
   `unit` varchar(10) NOT NULL,
   `ingredient` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -40,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `recipes` (
   `cook_time_hours` float NOT NULL,
   `cook_time_minutes` float NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -52,9 +51,8 @@ CREATE TABLE IF NOT EXISTS `tags` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `description` text NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -67,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `tag_mappings` (
   `tag_id` int(10) NOT NULL,
   `recipe_id` int(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -81,7 +79,8 @@ CREATE TABLE IF NOT EXISTS `user_openids` (
   `openid` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `openid` (`openid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
 
 -- --------------------------------------------------------
 
@@ -103,4 +102,4 @@ CREATE TABLE IF NOT EXISTS `user_profiles` (
   `creation_date` varchar(255) NOT NULL,
   `last_active` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

@@ -32,14 +32,15 @@ class Collection extends Controller {
 	}
 	
 	public function index() {
-		$data = array();
-		$data['errors'] = array();
-		$data['errors'][] = $this->model->insert_tags('1', array('fap','newfapper','fapper','fappest'));
-		$this->view->load('collection/index', $data);
+		redirect('collection/my_recipes');
 	}
 	
 	public function my_recipes() {
-		$this->view->load('collection/index');
+		
+		$data = array();
+		$data['recipes'] = $this->model->get_recipes_small(Session::get('id'));
+		
+		$this->view->load('collection/my_recipes', $data);
 	}
 	
 	public function new_recipe() {

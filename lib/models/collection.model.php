@@ -96,9 +96,8 @@ class Collection_Model extends Model {
 				$mapping .= "('{$tag['id']}', '$recipe_id'),";
 			}
 			$mapping = rtrim($mapping, ",");
-			$sth = $this->db->prepare("INSERT INTO tag_mappings (tag_id, recipe_id) VALUES $mapping");
-			/* The problem now is that the mapping is duplicated each time this is run */
-			return true;
+			$sth = $this->db->prepare("INSERT IGNORE INTO tag_mappings (tag_id, recipe_id) VALUES $mapping");
+			return $sth->execute();
 		}
 		return false;
 	}
@@ -139,62 +138,30 @@ class Collection_Model extends Model {
 		return true;
 	}
 	
-	public function login_user($identity) {
-		$sth = $this->db->prepare("SELECT * FROM user_profiles WHERE id = :identity");
+	public function get_recipes_small($owner_id) {
+		$sth = $this->db->prepare("SELECT * FROM recipes WHERE owner_id = :owner_id");
 		$sth->execute(array(
-			':identity' => $identity
+			':owner_id' => $owner_id
 		));
-		$res = $sth->fetchAll();
-		if( count($res) > 0 ) {
-			foreach( $res[0] as $k => $v ) {
-				Session::set($k, $v);
-			}
-			Session::set('logged_in', 1);
-			return true;
+		$res = $sth->fetchAll(PDO::FETCH_ASSOC);
+		$ret = array();
+		foreach( $res as $row ) {
+			$sth = $this->db->prepare("SELECT name FROM tags WHERE tags.id in (SELECT tag_id FROM tag_mappings WHERE recipe_id = :recipe_id)");
+			$sth->execute(array(
+				':recipe_id' => $row['id']
+			));
+			$row['tags'] = $sth->fetchAll(PDO::FETCH_ASSOC);
+			
+			$sth = $this->db->prepare("SELECT amount, unit, ingredient FROM ingredients_list WHERE recipe_id = :recipe_id");
+			$sth->execute(array(
+				':recipe_id' => $row['id']
+			));
+			$row['ingredients'] = $sth->fetchAll(PDO::FETCH_ASSOC);
+			
+			$ret[] = $row;
 		}
-		return false;
+		return $ret;
 	}
 	
-	public function logout_user($id) {
-		$sth = $this->db->prepare("UPDATE user_profiles SET last_active = :last_active WHERE id = :id");
-		$res = $sth->execute(array(
-			':last_active' => date('r'),
-			':id' => $id
-		));
-		if( $res ) {
-			Session::destroy();
-			return true;
-		}
-		return false;
-	}
-	
-	public function create_userprofile($username, $email, $fullname = "", $dob = "", $gender = "", $postcode = "", $country = "", $language = "", $timezone = "") {
-		$sth = $this->db->prepare("INSERT INTO user_profiles (username, email, fullname, dob, gender, postcode, country, language, timezone, creation_date, last_active) VALUES (:username, :email, :fullname, :dob, :gender, :postcode, :country, :language, :timezone, :creation_date, :last_active)");
-		$res = $sth->execute(array(
-			':username' => $username,
-			':email' => $email,
-			':fullname' => $fullname,
-			':dob' => $dob,
-			':gender' => $gender,
-			':postcode' => $postcode,
-			':country' => $country,
-			':language' => $language,
-			':timezone' => $timezone,
-			':creation_date' => date('r'),
-			':last_active' => date('r')
-		));
-		if( $res ) {
-			return $this->db->lastInsertId();
-		}
-		return false;
-	}
-
-	public function register_openid($identity, $openid) {
-		$sth = $this->db->prepare("INSERT INTO user_openids (identity, openid) VALUES (:identity, :openid)");
-		$res = $sth->execute(array(
-			':identity' => $identity,
-			':openid' => $openid
-		));
-		return $res;
-	}
 }
+ 
